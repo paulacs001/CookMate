@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnEditProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/colorAccent"
+        android:src="@drawable/ic_settings"
+        android:contentDescription="@string/update_profile_button_description" />
+
+    <ImageView
+        android:id="@+id/display_profile_pic"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:src="@drawable/ic_users"
+        android:layout_gravity="center"/>
+
+
+    <TextView
+        android:id="@+id/display_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Name"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/display_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="User description "
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"/>
+
+    <LinearLayout
+        android:id="@+id/profile_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/gallery_img_1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/add_image"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_image_search" />
+
+        <ImageView
+            android:id="@+id/gallery_img_2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/add_image"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_image_search" />
+
+        <ImageView
+            android:id="@+id/gallery_img_3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/add_image"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_image_search" />
+
+        <ImageView
+            android:id="@+id/gallery_img_4"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/add_image"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_image_search" />
+
+        <ImageView
+            android:id="@+id/gallery_img_5"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/add_image"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_image_search" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/tv_images_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Add Images"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/ll_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/iv_add_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/add_image"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_image_search" />
+
+        <ImageView
+            android:id="@+id/iv_add_image2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/add_image"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_image_search" />
+
+        <ImageView
+            android:id="@+id/iv_add_image3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/add_image"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_image_search" />
+
+        <ImageView
+            android:id="@+id/iv_add_image4"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/add_image"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_image_search" />
+
+        <ImageView
+            android:id="@+id/iv_add_image5"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/add_image"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_image_search" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_add_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Add Image" />
+
+    <TextView
+        android:id="@+id/tv_ingredients_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Ingredients"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/et_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="8dp"
+        android:hint="Add Ingredients"
+        android:inputType="text"
+        android:padding="16dp" />
+
+    <TextView
+        android:id="@+id/tv_instructions_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Instructions"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/et_instructions"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="8dp"
+        android:hint="Instructions"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical" />
+
+
+    <Button
+        android:id="@+id/btn_add_recipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Add Recipe" />
+
+</LinearLayout>
