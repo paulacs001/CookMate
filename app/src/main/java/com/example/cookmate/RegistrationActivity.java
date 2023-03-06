@@ -152,10 +152,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
                     Toast.makeText(RegistrationActivity.this, "Registered User " + user.getEmail(), Toast.LENGTH_LONG).show();
-                    Intent mainIntent = new Intent(RegistrationActivity.this, EditProfileActivity.class);
-                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(mainIntent);
-                    finish();
+                    Intent ProfileIntent = new Intent(RegistrationActivity.this, EditProfileActivity.class);
+                    ProfileIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(ProfileIntent);
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(RegistrationActivity.this, "Error", Toast.LENGTH_LONG).show();

@@ -127,7 +127,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 // Display success message
                 Toast.makeText(getApplicationContext(), "Profile successfully", Toast.LENGTH_SHORT).show();
-                finish(); // This will close the current activity and return to the previous one
+                Intent mainIntent = new Intent(EditProfileActivity.this, ProfileFragment.class);
+                mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+                startActivity(mainIntent);
 
                 // Clear input fields
                 edit_name.setText("");
