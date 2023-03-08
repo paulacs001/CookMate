@@ -35,6 +35,9 @@
             android:name=".PostAdapt"
             android:exported="false" />
         <activity
+            android:name=".AddShoppingListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ModelPost"
             android:exported="false" />
         <activity android:name=".DashboardActivity" />

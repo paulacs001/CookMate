@@ -11,6 +11,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_profile_settings">ProfileSettingsActivity</string>
 
+    <string name="add_shopping_list_button_description">Add a new shopping cart</string>
+    <string name="save_cart">Save shopping cart</string>
+    <string name="shopping_list_title">Shopping list name</string>
+    <string name="next_item">What do you need for your next recipe?</string>
+    <string name="add_item">Add item</string>
+    <string name="to_buy">To buy</string>
+    <string name="background_image">Background image</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>

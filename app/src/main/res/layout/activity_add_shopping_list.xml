@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F1FEFF">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="#F1FEFF">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:contentDescription="@string/background_image"
+            android:scaleX="1.3"
+            android:scaleY="1.1"
+            app:srcCompat="@drawable/shopping_cropped" />
+
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView2"
+            android:layout_centerInParent="true"
+            android:hint="@string/shopping_list_title"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_items"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:alpha="0.7"
+            android:ems="10"
+            android:layout_below="@+id/et_title"
+            android:hint="@string/next_item"
+            android:inputType="text"
+            android:padding="16dp" />
+
+        <ImageView
+            android:id="@+id/add"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_below="@+id/et_title"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="19dp"
+            android:layout_toEndOf="@+id/et_items"
+            android:src="@drawable/add_item" />
+
+    </RelativeLayout>
+
+
+    <ListView
+        android:id="@+id/shoppingItems"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_below="@+id/btn_add_list"
+        android:layout_marginTop="2dp" />
+
+    <Button
+        android:id="@+id/btn_add_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/save_cart"
+        android:layout_below="@+id/header" />
+
+</RelativeLayout>
