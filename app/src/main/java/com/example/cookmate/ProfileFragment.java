@@ -79,8 +79,8 @@ public class ProfileFragment extends Fragment {
                         display_name.setText(document.get("name").toString());
                         display_description.setText(document.get("description").toString());
 
-                        profile_pic.setImageURI(null);
-                        profile_pic.setImageURI(Uri.parse((String) document.get("profile_pic")));
+                        //profile_pic.setImageURI(null);
+                        //profile_pic.setImageURI(Uri.parse((String) document.get("profile_pic")));
 
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                     } else {

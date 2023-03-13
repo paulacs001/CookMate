@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +39,9 @@ public class AddShoppingListActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "MyActivity";
 
+    private FirebaseAuth mAuth;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,11 @@ public class AddShoppingListActivity extends AppCompatActivity {
         items = new ArrayList<>();
         btnAddShoppingCart = findViewById(R.id.btn_add_list);
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+
+
         shoppingItems.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
@@ -61,7 +71,7 @@ public class AddShoppingListActivity extends AppCompatActivity {
         shoppingItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l){
-                makeToast("Removed" + items.get(i));
+                makeToast("Removed " + items.get(i));
                 removeItem(i);
                 return false;
             }
@@ -105,18 +115,13 @@ public class AddShoppingListActivity extends AppCompatActivity {
 
                 // Add recipe to database or perform any other relevant action here
 
-                //We will want to save timestamp too
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String currentDateTime = dateFormat.format(new Date()); // Find todays date
-
-                // Create a new user with a first and last name
+                // Create a new list with a title and items
                 Map<String, Object> new_list = new HashMap<>();
                 new_list.put("title", title);
                 new_list.put("items", items);
-                new_list.put("timestamp", currentDateTime);
 
-                db.collection("shopping_list").document(title)
-                        .set(new_list)
+                db.collection("users").document(uid)
+                        .collection("Shopping Lists").document(title).set(new_list)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -147,6 +152,7 @@ public class AddShoppingListActivity extends AppCompatActivity {
     }
     public static void addItem(String item){
         items.add(item);
+        Log.d(TAG, "Shopping list items:" + items);
         shoppingItems.setAdapter(adapter);
     }
     Toast t;
