@@ -83,6 +83,7 @@ public class AddShoppingListActivity extends AppCompatActivity {
         Handler handler = new Handler(Looper.getMainLooper());
 
         adapter = new ListViewAdapter(getApplicationContext(), items);
+        shoppingItems.setAdapter(adapter);
 
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,11 +156,15 @@ public class AddShoppingListActivity extends AppCompatActivity {
         items.remove(remove);
         Log.d(TAG, "Shopping list items:" + items);
         shoppingItems.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
     public static void addItem(String item){
-        items.add(item);
-        Log.d(TAG, "Shopping list items:" + items);
-        shoppingItems.setAdapter(adapter);
+        if (!items.contains(item)) {
+            items.add(item);
+            Log.d(TAG, "Shopping list items:" + items);
+            shoppingItems.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
     }
     Toast t;
 

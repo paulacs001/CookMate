@@ -31,14 +31,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class HomeFragment extends Fragment {
 
     private FloatingActionButton btnAddRecipe;
-
     FirebaseUser firebaseUser;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "MyActivity";
-
     private TextView RecipeTitle, RecipeIngredients, RecipeInstructions;
-
-
 
     public HomeFragment() {
         // Required empty public constructor
@@ -67,7 +63,7 @@ public class HomeFragment extends Fragment {
 
 
         db.collection("recipes")
-                .limit(1)
+                .limit(3)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
