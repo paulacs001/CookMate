@@ -45,7 +45,7 @@ public class DashboardActivity extends AppCompatActivity {
         actionBar.setTitle("Home");
 
         //JUST CHECKING WE RETRIEVE DATA IN LOGCAT PROPERLY!
-        db.collection("users")
+/*        db.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -73,7 +73,7 @@ public class DashboardActivity extends AppCompatActivity {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
                     }
-                });
+                });*/
 
 
 

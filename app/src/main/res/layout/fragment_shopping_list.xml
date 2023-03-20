@@ -8,6 +8,7 @@
     tools:context=".ShoppingListFragment">
 
     <TextView
+        android:id="@+id/ShopFragmentTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/menu_shopping_list_text"
@@ -15,6 +16,24 @@
         android:textColor="#E91E63"
         android:textSize="60sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/shopping_list_title"
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+
+    <ListView
+        android:id="@+id/shoppingItems"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="200dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAddShoppingList"

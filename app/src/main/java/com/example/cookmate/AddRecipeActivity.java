@@ -66,7 +66,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         btnAddRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                 String title = etTitle.getText().toString().trim();
                 String ingredients = etIngredients.getText().toString().trim();
@@ -106,25 +105,26 @@ public class AddRecipeActivity extends AppCompatActivity {
                 new_recipe.put("images", selectedImageUris);
                 new_recipe.put("timestamp" , currentDateTime);
 
-
                 db.collection("recipes").document(title)
                         .set(new_recipe)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d(TAG, "DocumentSnapshot successfully written!");
+                                Toast.makeText(getApplicationContext(), "Recipe added successfully", Toast.LENGTH_SHORT).show();
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.w(TAG, "Error writing document", e);
+                                Toast.makeText(getApplicationContext(), "Recipe NOT added successfully", Toast.LENGTH_SHORT).show();
                             }
                         });
 
 
                 // Display success message
-                Toast.makeText(getApplicationContext(), "Recipe added successfully", Toast.LENGTH_SHORT).show();
                 finish(); // This will close the current activity and return to the previous one
 
                 // Clear input fields

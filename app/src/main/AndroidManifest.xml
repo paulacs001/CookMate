@@ -3,6 +3,7 @@
     package="com.example.socialmediaapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -16,35 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight">
         <activity
-            android:name=".EditProfileActivity"
+            android:name="com.example.cookmate.EditProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.example.cookmate.AddRecipeActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileSettingsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_profile_settings" />
-        <activity
-            android:name=".AddRecipeActivity"
+            android:name="com.example.cookmate.AddShoppingListActivity"
             android:exported="false" />
+
+        <activity android:name="com.example.cookmate.DashboardActivity" />
+        <activity android:name="com.example.cookmate.LoginActivity" />
+        <activity android:name="com.example.cookmate.RegistrationActivity" />
         <activity
-            android:name=".PostDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PostLikedByActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PostAdapt"
-            android:exported="false" />
-        <activity
-            android:name=".AddShoppingListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ModelPost"
-            android:exported="false" />
-        <activity android:name=".DashboardActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegistrationActivity" />
-        <activity
-            android:name=".SplashScreen"
+            android:name="com.example.cookmate.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -153,6 +153,7 @@ public class AddShoppingListActivity extends AppCompatActivity {
 
     public static void removeItem(int remove){
         items.remove(remove);
+        Log.d(TAG, "Shopping list items:" + items);
         shoppingItems.setAdapter(adapter);
     }
     public static void addItem(String item){

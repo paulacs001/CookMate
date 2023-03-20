@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,12 +17,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import androidx.annotation.Nullable;
 
@@ -32,6 +35,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -48,6 +52,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Uri profile_pic;
 
     private static final int PICK_IMAGE = 1;
+    private static final int GalleryPick = 2;
     private ArrayList<Uri> selectedImageUris = new ArrayList<>();
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -57,6 +62,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_UPP = 0x9988;
 
+    private final int PICK_IMAGE_REQUEST = 71;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,8 +133,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 // Display success message
                 Toast.makeText(getApplicationContext(), "Profile successfully", Toast.LENGTH_SHORT).show();
-                Intent mainIntent = new Intent(EditProfileActivity.this, ProfileFragment.class);
-                mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+                Intent mainIntent = new Intent(EditProfileActivity.this, SplashScreen.class);
                 startActivity(mainIntent);
 
                 // Clear input fields
@@ -143,7 +148,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (selectedImageUris.size() < 5) {
                     // Launch photo picker
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, PICK_IMAGE);
                 } else {
                     Toast.makeText(getApplicationContext(), "You can only select up to 5 images", Toast.LENGTH_SHORT).show();
@@ -158,20 +163,23 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, REQUEST_CODE_UPP);
+
             }
         });
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == REQUEST_CODE_UPP && resultCode == RESULT_OK && data != null) {
+
             Uri imageUri = data.getData();
             profile_pic = imageUri;
         }
 
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
+        if (requestCode == GalleryPick && resultCode == RESULT_OK && data != null) {
             // Get the image URI and add it to the selectedImageUris list
             Uri imageUri = data.getData();
             selectedImageUris.add(imageUri);

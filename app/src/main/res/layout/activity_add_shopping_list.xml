@@ -55,6 +55,13 @@
 
     </RelativeLayout>
 
+    <Button
+        android:id="@+id/btn_add_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/save_cart"
+        android:layout_below="@+id/header" />
 
     <ListView
         android:id="@+id/shoppingItems"
@@ -63,12 +70,6 @@
         android:layout_below="@+id/btn_add_list"
         android:layout_marginTop="2dp" />
 
-    <Button
-        android:id="@+id/btn_add_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/save_cart"
-        android:layout_below="@+id/header" />
+
 
 </RelativeLayout>

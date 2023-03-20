@@ -1,13 +1,16 @@
 package com.example.cookmate;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +29,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Source;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,7 +40,7 @@ public class ProfileFragment extends Fragment {
 
     private TextView display_name, display_description;
 
-    private ImageView profile_pic;
+    ImageView profile_pic;
     private FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -79,7 +83,18 @@ public class ProfileFragment extends Fragment {
                         display_name.setText(document.get("name").toString());
                         display_description.setText(document.get("description").toString());
 
+                        String image_uri = document.get("profile_pic").toString();
+
+                        profile_pic.setVisibility(View.VISIBLE);
+
+                        //String imageUri = "https://i.imgur.com/tGbaZCY.jpg";
+                        Picasso.get().load(image_uri).into(profile_pic);
+
+
+                        //profile_pic.setImageURI(Uri.parse(image_uri));
+
                         //profile_pic.setImageURI(null);
+                        //Picasso.get().load("http://www.google.com/image.png").into(profile_pic);
                         //profile_pic.setImageURI(Uri.parse((String) document.get("profile_pic")));
 
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
