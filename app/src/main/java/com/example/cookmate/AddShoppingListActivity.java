@@ -1,8 +1,12 @@
 package com.example.cookmate;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,12 +31,12 @@ import java.util.Map;
 
 
 public class AddShoppingListActivity extends AppCompatActivity {
-    private EditText etTitle, etItems;
-    private ImageView enter;
+    EditText etTitle, etItems;
+    ImageView enter;
 
     static ListView shoppingItems;
     static ArrayList<String> items;
-    private Button btnAddShoppingCart;
+    Button btnAddShoppingCart;
 
     static ListViewAdapter adapter;
 
@@ -40,7 +44,6 @@ public class AddShoppingListActivity extends AppCompatActivity {
     private static final String TAG = "MyActivity";
 
     private FirebaseAuth mAuth;
-
 
 
     @Override
@@ -77,12 +80,14 @@ public class AddShoppingListActivity extends AppCompatActivity {
             }
         });
 
+        Handler handler = new Handler(Looper.getMainLooper());
+
         adapter = new ListViewAdapter(getApplicationContext(), items);
-        shoppingItems.setAdapter(adapter);
 
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                closeKeyboard();
                 String text = etItems.getText().toString();
                 if (text == null || text.length() == 0) {
                     makeToast("Enter an item");
@@ -157,6 +162,13 @@ public class AddShoppingListActivity extends AppCompatActivity {
     }
     Toast t;
 
+    private void closeKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null){
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
     private void makeToast(String s) {
         if (t != null) t.cancel();
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
