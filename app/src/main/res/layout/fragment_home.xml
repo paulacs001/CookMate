@@ -11,15 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/RecipeHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/menu_recipes_text"
-            android:textAlignment="center"
-            android:textColor="#E91E63"
-            android:textSize="60sp"
-            android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/CardView"
@@ -33,7 +24,6 @@
             app:cardMaxElevation="12dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true"
-            app:layout_constraintTop_toBottomOf="@+id/RecipeHeader"
             tools:layout_editor_absoluteX="170dp">
 
             <LinearLayout
