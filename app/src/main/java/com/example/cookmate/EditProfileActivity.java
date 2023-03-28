@@ -2,9 +2,8 @@ package com.example.cookmate;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.app.Activity;
+
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,14 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -32,15 +26,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class EditProfileActivity extends AppCompatActivity {
     private EditText edit_name, edit_description;
@@ -62,6 +54,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_UPP = 0x9988;
 
+    Uri filePath;
+
     private final int PICK_IMAGE_REQUEST = 71;
 
     @Override
@@ -82,12 +76,16 @@ public class EditProfileActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         String uid = user.getUid();
 
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+
 
         // Add click listener to the "Add Recipe" button
         btn_update_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
                 String name = edit_name.getText().toString().trim();
                 String description = edit_description.getText().toString().trim();
@@ -104,6 +102,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     edit_description.requestFocus();
                     return;
                 }
+
 
                 // Add recipe to database or perform any other relevant action here
 
@@ -156,14 +155,14 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+
         btnProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Launch photo picker
-
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, REQUEST_CODE_UPP);
-
+            public void onClick(View view) {
+                // Launch the gallery intent to pick an image
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_IMAGE_REQUEST);
             }
         });
 
@@ -173,49 +172,53 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQUEST_CODE_UPP && resultCode == RESULT_OK && data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST
+                && resultCode == RESULT_OK
+                && data != null
+                && data.getData() != null) {
 
-            Uri imageUri = data.getData();
-            profile_pic = imageUri;
-        }
+            // Get the Uri of data
+            Uri imageUri  = data.getData();
+            uploadImageToFirestore(imageUri);
 
-        if (requestCode == GalleryPick && resultCode == RESULT_OK && data != null) {
-            // Get the image URI and add it to the selectedImageUris list
-            Uri imageUri = data.getData();
-            selectedImageUris.add(imageUri);
-
-            // Show the selected image(s) in the ImageView(s)
-            showSelectedImages();
-        }
-
-    }
-    private void showSelectedImages() {
-        for (int i = 0; i < selectedImageUris.size(); i++) {
-            if (i == 0) {
-                // Show the first selected image in the main ImageView
-                gallery_img_1.setImageURI(selectedImageUris.get(i));
-            } else if (i == 1) {
-                // Show the second selected image in the first additional ImageView
-                ImageView gallery_img_2 = findViewById(R.id.gallery_img_2);
-                gallery_img_2.setVisibility(View.VISIBLE);
-                gallery_img_2.setImageURI(selectedImageUris.get(i));
-            } else if (i == 2) {
-                // Show the third selected image in the second additional ImageView
-                ImageView gallery_img_3 = findViewById(R.id.gallery_img_3);
-                gallery_img_3.setVisibility(View.VISIBLE);
-                gallery_img_3.setImageURI(selectedImageUris.get(i));
-            } else if (i == 3) {
-                // Show the fourth selected image in the third additional ImageView
-                ImageView gallery_img_4 = findViewById(R.id.gallery_img_4);
-                gallery_img_4.setVisibility(View.VISIBLE);
-                gallery_img_4.setImageURI(selectedImageUris.get(i));
-            } else if (i == 4) {
-                // Show the fifth selected image in the fourth additional ImageView
-                ImageView gallery_img_5 = findViewById(R.id.gallery_img_5);
-                gallery_img_5.setVisibility(View.VISIBLE);
-                gallery_img_5.setImageURI(selectedImageUris.get(i));
-            }
+            //profile_pic = filePath;
         }
     }
 
+    private void uploadImageToFirestore(Uri imageUri) {
+        // Create a storage reference for the image file
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child("profile_images/" + user.getUid() + ".jpg");
+
+        // Upload the image file to Firebase Storage
+
+        storageRef.putFile(imageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get the download URL of the uploaded image file
+                        storageRef.getDownloadUrl()
+                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        // Save the download URL to Firestore
+                                        db.collection("users").document(user.getUid())
+                                                .update("profile_pic", uri.toString());
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Display an error message
+                        Toast.makeText(EditProfileActivity.this, "Failed to update profile image", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+    }
 }

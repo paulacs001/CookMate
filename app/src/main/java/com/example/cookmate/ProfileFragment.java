@@ -84,20 +84,8 @@ public class ProfileFragment extends Fragment {
                         display_description.setText(document.get("description").toString());
 
                         String image_uri = document.get("profile_pic").toString();
-
-                        profile_pic.setVisibility(View.VISIBLE);
-
-                        //String imageUri = "https://i.imgur.com/tGbaZCY.jpg";
                         Picasso.get().load(image_uri).into(profile_pic);
 
-
-                        //profile_pic.setImageURI(Uri.parse(image_uri));
-
-                        //profile_pic.setImageURI(null);
-                        //Picasso.get().load("http://www.google.com/image.png").into(profile_pic);
-                        //profile_pic.setImageURI(Uri.parse((String) document.get("profile_pic")));
-
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                     } else {
                         Log.d(TAG, "No such document");
                     }
