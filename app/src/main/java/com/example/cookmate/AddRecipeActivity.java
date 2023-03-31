@@ -2,6 +2,8 @@ package com.example.cookmate;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -24,28 +27,38 @@ import java.util.Map;
 
 import androidx.annotation.Nullable;
 
+//import com.example.socialmediaapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
     private EditText etTitle, etIngredients, etInstructions;
-    private Button btnAddRecipe, btnAddImage;
+    private Button btnAddRecipe;
+    private ImageButton btnAddImage;
 
     private ListView lvIngredients;
     private ImageView ivAddImage;
 
-    private static final int PICK_IMAGE = 1;
-    private ArrayList<Uri> selectedImageUris = new ArrayList<>();
+    private final int PICK_IMAGE_REQUEST = 71;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
+
     private static final String TAG = "MyActivity";
 
+    public String image_uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +70,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         etInstructions = findViewById(R.id.et_instructions);
         btnAddRecipe = findViewById(R.id.btn_add_recipe);
         btnAddImage = findViewById(R.id.btn_add_image);
-        ivAddImage = findViewById(R.id.iv_add_image);
-
 
 
 
@@ -70,6 +81,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String title = etTitle.getText().toString().trim();
                 String ingredients = etIngredients.getText().toString().trim();
                 String instructions = etInstructions.getText().toString().trim();
+
 
                 // Validate user input
                 if (title.isEmpty()) {
@@ -102,7 +114,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 new_recipe.put("title", title);
                 new_recipe.put("ingredients", ingredients);
                 new_recipe.put("instructions", instructions);
-                new_recipe.put("images", selectedImageUris);
+                new_recipe.put("image", image_uri);
                 new_recipe.put("timestamp" , currentDateTime);
 
                 db.collection("recipes").document(title)
@@ -137,13 +149,9 @@ public class AddRecipeActivity extends AppCompatActivity {
         btnAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectedImageUris.size() < 5) {
-                    // Launch photo picker
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, PICK_IMAGE);
-                } else {
-                    Toast.makeText(getApplicationContext(), "You can only select up to 5 images", Toast.LENGTH_SHORT).show();
-                }
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, PICK_IMAGE_REQUEST);
             }
         });
 
@@ -152,43 +160,58 @@ public class AddRecipeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
-            // Get the image URI and add it to the selectedImageUris list
-            Uri imageUri = data.getData();
-            selectedImageUris.add(imageUri);
+        if (requestCode == PICK_IMAGE_REQUEST
+                && resultCode == RESULT_OK
+                && data != null
+                && data.getData() != null) {
 
-            // Show the selected image(s) in the ImageView(s)
-            showSelectedImages();
-        }
-    }
-    private void showSelectedImages() {
-        for (int i = 0; i < selectedImageUris.size(); i++) {
-            if (i == 0) {
-                // Show the first selected image in the main ImageView
-                ivAddImage.setImageURI(selectedImageUris.get(i));
-            } else if (i == 1) {
-                // Show the second selected image in the first additional ImageView
-                ImageView ivAddImage1 = findViewById(R.id.iv_add_image);
-                ivAddImage1.setVisibility(View.VISIBLE);
-                ivAddImage1.setImageURI(selectedImageUris.get(i));
-            } else if (i == 2) {
-                // Show the third selected image in the second additional ImageView
-                ImageView ivAddImage2 = findViewById(R.id.iv_add_image2);
-                ivAddImage2.setVisibility(View.VISIBLE);
-                ivAddImage2.setImageURI(selectedImageUris.get(i));
-            } else if (i == 3) {
-                // Show the fourth selected image in the third additional ImageView
-                ImageView ivAddImage3 = findViewById(R.id.iv_add_image3);
-                ivAddImage3.setVisibility(View.VISIBLE);
-                ivAddImage3.setImageURI(selectedImageUris.get(i));
-            } else if (i == 4) {
-                // Show the fifth selected image in the fourth additional ImageView
-                ImageView ivAddImage4 = findViewById(R.id.iv_add_image4);
-                ivAddImage4.setVisibility(View.VISIBLE);
-                ivAddImage4.setImageURI(selectedImageUris.get(i));
-            }
+            // Get the Uri of data
+            Uri imageUri  = data.getData();
+            uploadImageToFirestore(imageUri);
+
         }
     }
 
+    private void uploadImageToFirestore(Uri imageUri) {
+        // Create a storage reference for the image file
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child("profile_images/" + user.getUid() + ".jpg");
+
+        // Upload the image file to Firebase Storage
+
+        storageRef.putFile(imageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get the download URL of the uploaded image file
+                        storageRef.getDownloadUrl()
+                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        // Save the download URL to Firestore
+                                        String title = etTitle.getText().toString().trim();
+                                        Log.d(TAG, "MENSAJE PRUEBA" + title);
+
+                                        image_uri = uri.toString() ;
+                                        db.collection("recipes").document(title).update("image", uri.toString());
+
+                                        //db.collection("recipes").document(title).set("images", );
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Display an error message
+                        Toast.makeText(AddRecipeActivity.this, "Failed to update image", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+    }
 }
 

@@ -2,6 +2,7 @@ package com.example.cookmate;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.content.Intent;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -27,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 public class HomeFragment extends Fragment {
 
@@ -35,7 +38,7 @@ public class HomeFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "MyActivity";
     private TextView RecipeTitle, RecipeIngredients, RecipeInstructions;
-
+    private ImageView RecipeImage;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -60,10 +63,11 @@ public class HomeFragment extends Fragment {
         RecipeTitle = view.findViewById(R.id.RecipeTitle);
         RecipeIngredients = view.findViewById(R.id.RecipeIngredients);
         RecipeInstructions = view.findViewById(R.id.RecipeInstructions);
+        RecipeImage = view.findViewById(R.id.RecipeImage);
 
 
         db.collection("recipes")
-                .limit(3)
+                .limit(1)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -73,6 +77,7 @@ public class HomeFragment extends Fragment {
                                 RecipeTitle.setText(document.getId());
                                 RecipeIngredients.setText(document.get("ingredients").toString());
                                 RecipeInstructions.setText(document.get("instructions").toString());
+                                Picasso.get().load(document.get("image").toString()).into(RecipeImage);
                                 Log.d(TAG, "hf: " + document.getId() + " => " + document.getData());
                             }
                         } else {
