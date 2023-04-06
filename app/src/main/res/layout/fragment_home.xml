@@ -11,6 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/RecipesTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/menu_recipes_text"
+            android:textAlignment="center"
+            android:textColor="#E91E63"
+            android:textSize="60sp"
+            android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/CardView"
@@ -18,6 +27,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginTop="456dp"
+            app:layout_constraintBottom_toBottomOf="@+id/RecipesTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="20dp"
             app:cardElevation="10dp"
