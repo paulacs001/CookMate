@@ -21,6 +21,17 @@
             android:textSize="60sp"
             android:textStyle="bold" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shoppingCardDisplay"
+            android:layout_width="0dp"
+            android:layout_height="350dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ShopFragmentTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+<!--
         <androidx.cardview.widget.CardView
             android:id="@+id/ShoppingCartView"
             android:layout_width="match_parent"
@@ -90,6 +101,7 @@
 
         </androidx.cardview.widget.CardView>
 
+-->
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnAddShoppingList"
@@ -100,7 +112,7 @@
             android:backgroundTint="@color/colorAccent"
             android:contentDescription="@string/add_shopping_list_button_description"
             android:src="@drawable/ic_more"
-            app:layout_constraintBottom_toBottomOf="@+id/ShoppingCartView"
+            app:layout_constraintBottom_toBottomOf="@+id/shoppingCardDisplay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent" />

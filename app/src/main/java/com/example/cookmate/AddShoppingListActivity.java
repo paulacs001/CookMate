@@ -131,6 +131,7 @@ public class AddShoppingListActivity extends AppCompatActivity {
                 Map<String, Object> new_list = new HashMap<>();
                 new_list.put("title", title);
                 new_list.put("items", items);
+                ShoppingListFragment.addCart(new_list);
 
                 db.collection("users").document(uid)
                         .collection("Shopping Lists").document(title).set(new_list)
