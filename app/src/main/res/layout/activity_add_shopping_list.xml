@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F1FEFF">
+    android:background="#F1FEFF"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/header"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="220dp"
-        android:background="#F1FEFF">
+        android:background="#F1FEFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView2"
@@ -34,10 +37,10 @@
             android:id="@+id/et_items"
             android:layout_width="300dp"
             android:layout_height="50dp"
+            android:layout_below="@+id/et_title"
             android:layout_margin="8dp"
             android:alpha="0.7"
             android:ems="10"
-            android:layout_below="@+id/et_title"
             android:hint="@string/next_item"
             android:inputType="text"
             android:padding="16dp" />
@@ -57,19 +60,26 @@
 
     <Button
         android:id="@+id/btn_add_list"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
         android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/save_cart"
-        android:layout_below="@+id/header" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shoppingItems"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="400dp"
         android:layout_below="@+id/btn_add_list"
-        android:layout_marginTop="2dp" />
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_add_list" />
 
 
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

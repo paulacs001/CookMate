@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,11 +36,11 @@ public class AddShoppingListActivity extends AppCompatActivity {
     EditText etTitle, etItems;
     ImageView enter;
 
-    static ListView shoppingItems;
+    static RecyclerView shoppingItems;
     static ArrayList<String> items;
     Button btnAddShoppingCart;
 
-    static ListViewAdapter adapter;
+    static RecyclerViewAdapter adapter;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "MyActivity";
@@ -63,27 +65,31 @@ public class AddShoppingListActivity extends AppCompatActivity {
         String uid = user.getUid();
 
 
-        shoppingItems.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
-                String name = items.get(i);
-                makeToast(name);
-            }
-        });
+        ///shoppingItems.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        ///    @Override
+        ///    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
+        ///        String name = items.get(i);
+        ///        makeToast(name);
+        ///    }
+        ///});
 
-        shoppingItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l){
-                makeToast("Removed " + items.get(i));
-                removeItem(i);
-                return false;
-            }
-        });
+        ///shoppingItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+        ///    @Override
+        ///    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l){
+        ///        makeToast("Removed " + items.get(i));
+        ///        removeItem(i);
+        ///        return false;
+        ///    }
+        ///});
 
         Handler handler = new Handler(Looper.getMainLooper());
 
-        adapter = new ListViewAdapter(getApplicationContext(), items);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        adapter = new RecyclerViewAdapter(getApplicationContext(), items);
         shoppingItems.setAdapter(adapter);
+        shoppingItems.setLayoutManager(layoutManager);
 
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,12 +165,10 @@ public class AddShoppingListActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
     public static void addItem(String item){
-        if (!items.contains(item)) {
-            items.add(item);
-            Log.d(TAG, "Shopping list items:" + items);
-            shoppingItems.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }
+        items.add(item);
+        Log.d(TAG, "Shopping list items:" + items);
+        shoppingItems.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
     Toast t;
 
