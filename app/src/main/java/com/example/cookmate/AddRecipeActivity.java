@@ -117,6 +117,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 new_recipe.put("image", image_uri);
                 new_recipe.put("timestamp" , currentDateTime);
 
+                Log.w(TAG, "New Recipe =>" + new_recipe);
                 db.collection("recipes").document(title)
                         .set(new_recipe)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {

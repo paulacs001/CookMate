@@ -5,14 +5,14 @@ android:layout_height="match_parent"
 android:orientation="vertical">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnEditProfile"
+        android:id="@+id/btnLogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
         android:layout_margin="16dp"
         android:backgroundTint="@color/colorAccent"
-        android:src="@drawable/ic_settings"
-        android:contentDescription="@string/update_profile_button_description" />
+        android:src="@drawable/ic_logout"
+        android:contentDescription="LogOut" />
 
     <ImageView
         android:id="@+id/display_profile_pic"
@@ -21,26 +21,31 @@ android:orientation="vertical">
         android:src="@drawable/ic_users"
         android:layout_gravity="center"/>
 
-
     <TextView
         android:id="@+id/display_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Name"
         android:textAlignment="center"
+        android:layout_gravity="center"
         android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:textSize="30sp"
+        android:background="#F5F5DC"
+        android:padding="25px"/>
 
     <TextView
         android:id="@+id/display_description"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="User description "
         android:textAlignment="center"
+        android:layout_gravity="center"
         android:textColor="@android:color/black"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:background="#F5F5DC"
+        android:padding="25px"/>
 
     <LinearLayout
         android:id="@+id/profile_gallery"
