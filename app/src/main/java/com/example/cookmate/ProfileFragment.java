@@ -53,13 +53,16 @@ public class ProfileFragment extends Fragment {
 
     private TextView display_name, display_description;
 
-    ImageView profile_pic;
+    ImageView profile_pic, gallery1, gallery2, gallery3;
     private FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private String TAG = "MyActivity";
 
-    private final int PICK_IMAGE_REQUEST = 71;
+    private final int PICK_IMAGE_REQUEST_PROFILE = 71;
+    private final int PICK_IMAGE_REQUEST_GALLERY1 = 72;
+    private final int PICK_IMAGE_REQUEST_GALLERY2 = 73;
+    private final int PICK_IMAGE_REQUEST_GALLERY3 = 74;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -84,6 +87,9 @@ public class ProfileFragment extends Fragment {
         display_name = view.findViewById(R.id.display_name);
         display_description = view.findViewById(R.id.display_description);
         profile_pic =  view.findViewById(R.id.display_profile_pic);
+        gallery1 =  view.findViewById(R.id.gallery_img_1);
+        gallery2 =  view.findViewById(R.id.gallery_img_2);
+        gallery3 =  view.findViewById(R.id.gallery_img_3);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -99,8 +105,17 @@ public class ProfileFragment extends Fragment {
                         display_name.setText(document.get("name").toString());
                         display_description.setText(document.get("description").toString());
 
-                        String image_uri = document.get("profile_pic").toString();
-                        Picasso.get().load(image_uri).into(profile_pic);
+                        String profile_image_uri = document.get("profile_pic").toString();
+                        Picasso.get().load(profile_image_uri).into(profile_pic);
+
+                        String gallery1_image_uri = document.get("profile_pic").toString();
+                        Picasso.get().load(gallery1_image_uri).into(gallery1);
+
+                        String gallery2_image_uri = document.get("profile_pic").toString();
+                        Picasso.get().load(gallery2_image_uri).into(gallery2);
+
+                        String gallery3_image_uri = document.get("profile_pic").toString();
+                        Picasso.get().load(gallery3_image_uri).into(gallery3);
 
                     } else {
                         Log.d(TAG, "No such document");
@@ -117,9 +132,41 @@ public class ProfileFragment extends Fragment {
                 // Launch the gallery intent to pick an image
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                startActivityForResult(intent, PICK_IMAGE_REQUEST);
+                startActivityForResult(intent, PICK_IMAGE_REQUEST_PROFILE);
             }
         });
+
+        gallery1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Launch the gallery intent to pick an image
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_IMAGE_REQUEST_GALLERY1);
+            }
+        });
+
+        gallery2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Launch the gallery intent to pick an image
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_IMAGE_REQUEST_GALLERY2);
+            }
+        });
+
+        gallery3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Launch the gallery intent to pick an image
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_IMAGE_REQUEST_GALLERY3);
+            }
+        });
+
+
         display_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,41 +250,112 @@ public class ProfileFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST
+        if (requestCode == PICK_IMAGE_REQUEST_PROFILE
                 && resultCode == RESULT_OK
                 && data != null
                 && data.getData() != null) {
 
             // Get the Uri of data
             Uri imageUri  = data.getData();
-            uploadImageToFirestore(imageUri);
+            uploadImageToFirestore(imageUri, 0);
+
+            //profile_pic = filePath;
+        }
+
+        if (requestCode == PICK_IMAGE_REQUEST_GALLERY1
+                && resultCode == RESULT_OK
+                && data != null
+                && data.getData() != null) {
+
+            // Get the Uri of data
+            Uri imageUri  = data.getData();
+            uploadImageToFirestore(imageUri, 1);
+
+            //profile_pic = filePath;
+        }
+
+        if (requestCode == PICK_IMAGE_REQUEST_GALLERY2
+                && resultCode == RESULT_OK
+                && data != null
+                && data.getData() != null) {
+
+            // Get the Uri of data
+            Uri imageUri  = data.getData();
+            uploadImageToFirestore(imageUri, 2);
+
+            //profile_pic = filePath;
+        }
+
+        if (requestCode == PICK_IMAGE_REQUEST_GALLERY3
+                && resultCode == RESULT_OK
+                && data != null
+                && data.getData() != null) {
+
+            // Get the Uri of data
+            Uri imageUri  = data.getData();
+            uploadImageToFirestore(imageUri, 3);
 
             //profile_pic = filePath;
         }
     }
 
-    private void uploadImageToFirestore(Uri imageUri) {
+    private void uploadImageToFirestore(Uri imageUri, int location) {
         // Create a storage reference for the image file
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("profile_images/" + user.getUid() + ".jpg");
+
+        StorageReference storageRef = null;
+
+        if (location == 0) {
+            storageRef = storage.getReference().child("profile_images/" + user.getUid() + ".jpg");
+        }
+
+        if (location == 1) {
+            storageRef = storage.getReference().child("UserGallery/" + user.getUid() + "1.jpg");
+        }
+
+        if (location == 2) {
+            storageRef = storage.getReference().child("UserGallery/" + user.getUid() + "2.jpg");
+        }
+
+        if (location == 3) {
+            storageRef = storage.getReference().child("UserGallery/" + user.getUid() + "3.jpg");
+        }
 
         // Upload the image file to Firebase Storage
 
+        StorageReference finalStorageRef = storageRef;
         storageRef.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Get the download URL of the uploaded image file
-                        storageRef.getDownloadUrl()
+                        finalStorageRef.getDownloadUrl()
                                 .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         // Save the download URL to Firestore
-                                        db.collection("users").document(user.getUid())
-                                                .update("profile_pic", uri.toString());
+                                        if (location == 0){
+                                            db.collection("users").document(user.getUid())
+                                                    .update("profile_pic", uri.toString());
+                                        }
+
+                                        else if (location == 1){
+                                            db.collection("users").document(user.getUid())
+                                                    .update("gallery1", uri.toString());
+                                        }
+
+                                        else if (location == 2){
+                                            db.collection("users").document(user.getUid())
+                                                    .update("gallery2", uri.toString());
+                                        }
+
+                                        else if (location == 3){
+                                            db.collection("users").document(user.getUid())
+                                                    .update("gallery3", uri.toString());
+                                        }
                                     }
                                 });
                     }
