@@ -3,9 +3,7 @@ package com.example.cookmate;
 import static android.app.Activity.RESULT_OK;
 
 import android.annotation.SuppressLint;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -38,13 +34,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Source;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ProfileFragment extends Fragment {
@@ -181,80 +174,72 @@ public class ProfileFragment extends Fragment {
         display_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Inflate the popup layout
-                View popupView = LayoutInflater.from(getContext()).inflate(R.layout.popup_edit_username, null);
-
-                // Initialize the views inside the popup layout
-                TextView popupTitle = popupView.findViewById(R.id.popup_title);
-                EditText newUsernameEditText = popupView.findViewById(R.id.new_username_edit_text);
-                Button updateUsernameButton = popupView.findViewById(R.id.update_username_button);
-
-                // Create the popup window
-                PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-
-                // Set the title of the popup window
-                popupTitle.setText("Edit Username");
-
-                // Set a click listener on the Update button
-                updateUsernameButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Get the new username from the EditText
-                        String newUsername = newUsernameEditText.getText().toString();
-                        Log.d("DEBUG", "New username: " + newUsername);
-
-                        db.collection("users").document(uid)
-                                .update("name", newUsername);
-
-                        // Dismiss the popup window
-                        popupWindow.dismiss();
-                    }
-                });
-
-                // Show the popup window
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                popupEdit(0);
             }
         });
 
         display_description.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Inflate the popup layout
-                View popupView = LayoutInflater.from(getContext()).inflate(R.layout.popup_edit_desc, null);
-
-                // Initialize the views inside the popup layout
-                TextView popupTitle = popupView.findViewById(R.id.popup_title);
-                EditText newDescEditText = popupView.findViewById(R.id.new_desc_edit_text);
-                Button updateUsernameButton = popupView.findViewById(R.id.update_desc_button);
-
-                // Create the popup window
-                PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-
-                // Set the title of the popup window
-                popupTitle.setText("Edit Username");
-
-                // Set a click listener on the Update button
-                updateUsernameButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Get the new username from the EditText
-                        String newDesc = newDescEditText.getText().toString();
-                        Log.d("DEBUG", "New desc: " + newDesc);
-
-                        db.collection("users").document(uid)
-                                .update("description", newDesc);
-
-                        // Dismiss the popup window
-                        popupWindow.dismiss();
-                    }
-                });
-
-                // Show the popup window
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                popupEdit(1);
             }
         });
 
         return view;
+    }
+
+    private void popupEdit(int mode) {
+        View popupView = LayoutInflater.from(getContext()).inflate(R.layout.popup_edit, null);
+
+        // Initialize the views inside the popup layout
+        TextView popupTitle = popupView.findViewById(R.id.popup_title);
+        EditText popupEditText = popupView.findViewById(R.id.popup_edit_text);
+        Button updateUsernameButton = popupView.findViewById(R.id.update_desc_button);
+
+        if (mode == 0){
+            popupTitle.setText("Edit Username");
+            popupEditText.setHint("Enter your new username");
+        }
+
+        else if (mode == 1){
+            popupTitle.setText("Edit Description");
+            popupEditText.setHint("Enter your new user description");
+        }
+        // Create the popup window
+        PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+
+        // Set the title of the popup window
+        popupTitle.setText("Edit Username");
+
+        // Set a click listener on the Update button
+        updateUsernameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the new username from the EditText
+                String updatedField = popupEditText.getText().toString();
+
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = mAuth.getCurrentUser();
+                String uid = user.getUid();
+
+                if (mode == 0){
+                    db.collection("users").document(uid)
+                            .update("name", updatedField);
+                }
+
+                else if (mode == 1){
+                    db.collection("users").document(uid)
+                            .update("description", updatedField);
+                }
+
+
+                // Dismiss the popup window
+                popupWindow.dismiss();
+            }
+        });
+
+        // Show the popup window
+        popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
     }
 
     @Override

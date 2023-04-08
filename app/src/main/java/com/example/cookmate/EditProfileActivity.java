@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -162,7 +164,6 @@ public class EditProfileActivity extends AppCompatActivity {
             Uri imageUri  = data.getData();
             uploadImageToFirestore(imageUri);
 
-            //profile_pic = filePath;
         }
     }
 
@@ -172,7 +173,9 @@ public class EditProfileActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("profile_images/" + user.getUid() + ".jpg");
+        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        String ts = s.format(new Date());
+        StorageReference storageRef = storage.getReference().child("profile_images/" + user.getUid() + ts + ".jpg");
 
         // Upload the image file to Firebase Storage
 
@@ -188,6 +191,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                         // Save the download URL to Firestore
                                         db.collection("users").document(user.getUid())
                                                 .update("profile_pic", uri.toString());
+
                                     }
                                 });
                     }
