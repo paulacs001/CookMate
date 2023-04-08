@@ -103,19 +103,30 @@ public class ProfileFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         display_name.setText(document.get("name").toString());
-                        display_description.setText(document.get("description").toString());
 
-                        String profile_image_uri = document.get("profile_pic").toString();
-                        Picasso.get().load(profile_image_uri).into(profile_pic);
+                        if (document.get("description") != null) {
+                            display_description.setText(document.get("description").toString());
+                        }
 
-                        String gallery1_image_uri = document.get("profile_pic").toString();
-                        Picasso.get().load(gallery1_image_uri).into(gallery1);
+                        if (document.get("profile_pic") != null){
+                            String profile_image_uri = document.get("profile_pic").toString();
+                            Picasso.get().load(profile_image_uri).into(profile_pic);
+                        }
 
-                        String gallery2_image_uri = document.get("profile_pic").toString();
-                        Picasso.get().load(gallery2_image_uri).into(gallery2);
+                        if (document.get("gallery1") != null){
+                            String gallery1_image_uri = document.get("gallery1").toString();
+                            Picasso.get().load(gallery1_image_uri).into(gallery1);
+                        }
 
-                        String gallery3_image_uri = document.get("profile_pic").toString();
-                        Picasso.get().load(gallery3_image_uri).into(gallery3);
+                        if (document.get("gallery2") != null){
+                            String gallery2_image_uri = document.get("gallery2").toString();
+                            Picasso.get().load(gallery2_image_uri).into(gallery2);
+                        }
+
+                        if (document.get("gallery3") != null){
+                            String gallery3_image_uri = document.get("gallery3").toString();
+                            Picasso.get().load(gallery3_image_uri).into(gallery3);
+                        }
 
                     } else {
                         Log.d(TAG, "No such document");

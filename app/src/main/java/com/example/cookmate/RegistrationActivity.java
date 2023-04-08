@@ -155,6 +155,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     Intent ProfileIntent = new Intent(RegistrationActivity.this, EditProfileActivity.class);
                     ProfileIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(ProfileIntent);
+
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(RegistrationActivity.this, "Error", Toast.LENGTH_LONG).show();

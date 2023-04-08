@@ -65,11 +65,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
         edit_name = findViewById(R.id.edit_name);
         edit_description = findViewById(R.id.edit_description);
-        btn_edit_gallery = findViewById(R.id.btn_edit_gallery);
         btn_update_profile = findViewById(R.id.btn_update_profile);
         btnProfilePic = findViewById(R.id.btnProfilePic);
-        gallery_img_1 = findViewById(R.id.gallery_img_1);
-
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -111,7 +108,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 updated_info.put("name", name);
                 updated_info.put("profile_pic", profile_pic);
                 updated_info.put("description", description);
-                updated_info.put("gallery", selectedImageUris);
 
 
                 db.collection("users").document(uid)
@@ -140,21 +136,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 edit_description.setText("");
             }
         });
-
-        // Add click listener to the "Add Image" button
-        btn_edit_gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedImageUris.size() < 5) {
-                    // Launch photo picker
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, PICK_IMAGE);
-                } else {
-                    Toast.makeText(getApplicationContext(), "You can only select up to 5 images", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
 
         btnProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override

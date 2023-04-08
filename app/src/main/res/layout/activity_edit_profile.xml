@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="8dp">
+    android:layout_margin="20dp">
 
     <TextView
         android:id="@+id/edit_pic_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Profile Pic"
+        android:text="Choose Your Profile Pic"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="16dp"/>
@@ -25,7 +25,7 @@
         android:id="@+id/edit_name_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Name"
+        android:text="How should we call you?"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="16dp"/>
@@ -34,7 +34,7 @@
         android:id="@+id/edit_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Insert updated name"
+        android:hint="Insert your name"
         android:layout_marginTop="8dp"
         android:inputType="text" />
 
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="User Description"
+        android:text="Describe yourself!"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -54,84 +54,6 @@
         android:hint="What would you like others to know about you?"
         android:inputType="textMultiLine"
         android:scrollbars="vertical" />
-
-
-    <TextView
-        android:id="@+id/edit_gallery_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Edit your gallery!"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:id="@+id/edit_full_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp">
-
-        <ImageView
-            android:id="@+id/gallery_img_1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/add_image"
-            android:padding="16dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_image_search" />
-
-        <ImageView
-            android:id="@+id/gallery_img_2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/add_image"
-            android:padding="16dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_image_search" />
-
-        <ImageView
-            android:id="@+id/gallery_img_3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/add_image"
-            android:padding="16dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_image_search" />
-
-        <ImageView
-            android:id="@+id/gallery_img_4"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/add_image"
-            android:padding="16dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_image_search" />
-
-        <ImageView
-            android:id="@+id/gallery_img_5"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/add_image"
-            android:padding="16dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_image_search" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_edit_gallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Edit Gallery" />
 
     <Button
         android:id="@+id/btn_update_profile"
