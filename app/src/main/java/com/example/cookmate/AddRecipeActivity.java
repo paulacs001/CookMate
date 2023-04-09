@@ -116,6 +116,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 new_recipe.put("instructions", instructions);
                 new_recipe.put("image", image_uri);
                 new_recipe.put("timestamp" , currentDateTime);
+                HomeFragment.addRecipe(new_recipe);
 
                 Log.w(TAG, "New Recipe =>" + new_recipe);
                 db.collection("recipes").document(title)

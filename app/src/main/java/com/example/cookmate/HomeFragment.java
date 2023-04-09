@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,13 +33,20 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class HomeFragment extends Fragment {
 
     private FloatingActionButton btnAddRecipe;
     FirebaseUser firebaseUser;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "MyActivity";
-    private TextView RecipeTitle, RecipeIngredients, RecipeInstructions;
+
+    private static RecyclerView recipes;
+    static ArrayList<Map<String, Object>> items;
+
+    static RecyclerCardViewRecipeAdapter adapter;
     private ImageView RecipeImage;
     public HomeFragment() {
         // Required empty public constructor
@@ -60,26 +69,26 @@ public class HomeFragment extends Fragment {
 
         Log.w(TAG, "launching home fragment.");
 
-        RecipeTitle = view.findViewById(R.id.RecipeTitle);
-        RecipeIngredients = view.findViewById(R.id.RecipeIngredients);
-        RecipeInstructions = view.findViewById(R.id.RecipeInstructions);
-        RecipeImage = view.findViewById(R.id.RecipeImage);
+        items = new ArrayList<>();
 
+        recipes = view.findViewById(R.id.RecipesCardDisplay);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         db.collection("recipes")
-                .limit(1)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                RecipeTitle.setText(document.getId());
-                                RecipeIngredients.setText(document.get("ingredients").toString());
-                                RecipeInstructions.setText(document.get("instructions").toString());
-                                Picasso.get().load(document.get("image").toString()).into(RecipeImage);
+                                items.add(document.getData());
                                 Log.d(TAG, "hf: " + document.getId() + " => " + document.getData());
                             }
+                            adapter = new RecyclerCardViewRecipeAdapter(getContext(), items);
+                            recipes.setAdapter(adapter);
+                            recipes.setLayoutManager(layoutManager);
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
@@ -87,6 +96,11 @@ public class HomeFragment extends Fragment {
                 });
 
         return view;
+    }
+    public static void addRecipe( Map<String, Object> cart){
+        items.add(cart);
+        recipes.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
 
