@@ -10,6 +10,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_profile_settings">ProfileSettingsActivity</string>
+    <string name="search_title">Search</string>
+    <string name="search_hint">Search for recipes</string>
+    <string name="search_button">Search</string>
 
     <string name="add_shopping_list_button_description">Add a new shopping cart</string>
     <string name="save_cart">Save shopping cart</string>
