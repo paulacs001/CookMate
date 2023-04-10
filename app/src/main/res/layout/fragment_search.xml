@@ -40,7 +40,7 @@
                 app:iconifiedByDefault="false" />
 
             <Button
-                android:id="@+id/search_button"
+                android:id="@+id/searchbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -63,7 +63,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_layout"
-            app:layout_constraintVertical_bias="0.832" />
+            app:layout_constraintVertical_bias="0.176" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
