@@ -97,8 +97,8 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
-    public static void addRecipe( Map<String, Object> cart){
-        items.add(cart);
+    public static void addRecipe( Map<String, Object> recipe){
+        items.add(recipe);
         recipes.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
