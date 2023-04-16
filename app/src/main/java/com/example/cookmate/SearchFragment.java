@@ -75,11 +75,12 @@ public class SearchFragment extends Fragment {
         Log.d("SEARCH", "Searching for: " + searchText);
         try {
             db.collection("recipes")
-                    .whereArrayContains("title", searchText)
+                    .whereEqualTo("title", searchText)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            items.clear();
                             if (task.isSuccessful()) {
                                 Log.d("ENTERED", "Succesful");
                                 for (QueryDocumentSnapshot document : task.getResult()) {
@@ -87,6 +88,7 @@ public class SearchFragment extends Fragment {
                                     Log.d(TAG, "hf: " + document.getId() + " => " + document.getData());
                                 }
                                 adapter = new RecyclerCardViewSearchAdapter(getContext(), items);
+                                adapter.notifyDataSetChanged();
                                 search.setAdapter(adapter);
                                 search.setLayoutManager(layoutManager);
                             } else {
