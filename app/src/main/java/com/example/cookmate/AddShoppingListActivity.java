@@ -116,13 +116,11 @@ public class AddShoppingListActivity extends AppCompatActivity {
                 if (title.isEmpty()) {
                     etTitle.setError("Please enter a title");
                     etTitle.requestFocus();
-                    return;
                 }
 
                 if (items.isEmpty()) {
                     etItems.setError("Please enter items to buy");
                     etItems.requestFocus();
-                    return;
                 }
 
                 // Add recipe to database or perform any other relevant action here

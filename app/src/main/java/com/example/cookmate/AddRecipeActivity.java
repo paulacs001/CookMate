@@ -87,19 +87,16 @@ public class AddRecipeActivity extends AppCompatActivity {
                 if (title.isEmpty()) {
                     etTitle.setError("Please enter a title");
                     etTitle.requestFocus();
-                    return;
                 }
 
                 if (ingredients.isEmpty()) {
                     etIngredients.setError("Please enter ingredients");
                     etIngredients.requestFocus();
-                    return;
                 }
 
                 if (instructions.isEmpty()) {
                     etInstructions.setError("Please enter instructions");
                     etInstructions.requestFocus();
-                    return;
                 }
 
                 // Add recipe to database or perform any other relevant action here

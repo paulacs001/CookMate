@@ -93,13 +93,11 @@ public class EditProfileActivity extends AppCompatActivity {
                 if (name.isEmpty()) {
                     edit_name.setError("Please enter your name");
                     edit_name.requestFocus();
-                    return;
                 }
 
                 if (description.isEmpty()) {
                     edit_description.setError("Please enter a description");
                     edit_description.requestFocus();
-                    return;
                 }
 
 

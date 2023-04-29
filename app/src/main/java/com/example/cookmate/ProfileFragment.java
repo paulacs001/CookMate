@@ -10,7 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -25,7 +24,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -58,6 +56,7 @@ public class ProfileFragment extends Fragment {
     private final int PICK_IMAGE_REQUEST_GALLERY1 = 72;
     private final int PICK_IMAGE_REQUEST_GALLERY2 = 73;
     private final int PICK_IMAGE_REQUEST_GALLERY3 = 74;
+    private String updatedField;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -177,9 +176,12 @@ public class ProfileFragment extends Fragment {
         display_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupEdit(0);
+                String newName = popupEdit(0);
+                Log.d(TAG, "CHANGE OF NAME!! : " + newName);
             }
+
         });
+
 
         display_description.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,8 +193,7 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-
-    private void popupEdit(int mode) {
+    private String popupEdit(int mode) {
         View popupView = LayoutInflater.from(getContext()).inflate(R.layout.popup_edit, null);
 
         // Initialize the views inside the popup layout
@@ -220,7 +221,17 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Get the new username from the EditText
-                String updatedField = popupEditText.getText().toString();
+                updatedField = popupEditText.getText().toString();
+
+                if (mode == 0){
+                    display_name.setText(updatedField);;
+                }
+
+                else if (mode == 1){
+                    display_description.setText(updatedField);
+                }
+
+
 
                 mAuth = FirebaseAuth.getInstance();
                 FirebaseUser user = mAuth.getCurrentUser();
@@ -236,14 +247,17 @@ public class ProfileFragment extends Fragment {
                             .update("description", updatedField);
                 }
 
-
                 // Dismiss the popup window
                 popupWindow.dismiss();
+
             }
         });
 
+
         // Show the popup window
         popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
+
+        return updatedField;
     }
 
     @Override
@@ -296,8 +310,11 @@ public class ProfileFragment extends Fragment {
             uploadImageToFirestore(imageUri, 3);
 
             //profile_pic = filePath;
+
         }
     }
+
+
 
     private void uploadImageToFirestore(Uri imageUri, int location) {
         // Create a storage reference for the image file
@@ -340,21 +357,34 @@ public class ProfileFragment extends Fragment {
                                         if (location == 0){
                                             db.collection("users").document(user.getUid())
                                                     .update("profile_pic", uri.toString());
+
+                                            String image_uri = uri.toString();
+                                            Picasso.get().load(image_uri).into(profile_pic);
+
                                         }
 
                                         else if (location == 1){
                                             db.collection("users").document(user.getUid())
                                                     .update("gallery1", uri.toString());
+
+                                            String image_uri = uri.toString();
+                                            Picasso.get().load(image_uri).into(gallery1);
                                         }
 
                                         else if (location == 2){
                                             db.collection("users").document(user.getUid())
                                                     .update("gallery2", uri.toString());
+
+                                            String image_uri = uri.toString();
+                                            Picasso.get().load(image_uri).into(gallery2);
                                         }
 
                                         else if (location == 3){
                                             db.collection("users").document(user.getUid())
                                                     .update("gallery3", uri.toString());
+
+                                            String image_uri = uri.toString();
+                                            Picasso.get().load(image_uri).into(gallery3);
                                         }
                                     }
                                 });
@@ -370,6 +400,5 @@ public class ProfileFragment extends Fragment {
 
 
     }
-
 
 }
