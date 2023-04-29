@@ -26,6 +26,9 @@
         <activity
             android:name="com.example.cookmate.AddShoppingListActivity"
             android:exported="false" />
+        <activity
+            android:name="com.example.cookmate.ShoppingCartViewDetailActivity"
+            android:exported="false" />
 
         <activity android:name="com.example.cookmate.DashboardActivity" />
         <activity android:name="com.example.cookmate.LoginActivity" />
