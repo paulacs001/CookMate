@@ -10,6 +10,7 @@
     app:cardMaxElevation="12dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true"
+    app:contentPadding="15dp"
     >
 
     <LinearLayout
@@ -35,7 +36,7 @@
             android:text="Title"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
             />
@@ -46,7 +47,7 @@
             android:layout_height="wrap_content"
             android:text="Items"
             android:layout_gravity="bottom"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:textSize="20sp"
             android:textStyle="bold"

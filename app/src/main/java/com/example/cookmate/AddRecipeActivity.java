@@ -114,7 +114,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 new_recipe.put("title", title);
                 new_recipe.put("ingredients", ingredients);
                 new_recipe.put("instructions", instructions);
-                //new_recipe.put("image", image_uri);
+                new_recipe.put("image", image_uri);
                 new_recipe.put("timestamp" , currentDateTime);
                 HomeFragment.addRecipe(new_recipe);
 
@@ -192,11 +192,11 @@ public class AddRecipeActivity extends AppCompatActivity {
                                     public void onSuccess(Uri uri) {
                                         // Save the download URL to Firestore
                                         String title = etTitle.getText().toString().trim();
-                                        Log.d(TAG, "MENSAJE PRUEBA" + title);
-                                        Log.d(TAG, "MENSAJE PRUEBA IMAGEN" + uri.toString());
+                                        Log.d(TAG, "MENSAJE PRUEBA " + title);
+                                        Log.d(TAG, "MENSAJE PRUEBA IMAGEN " + uri.toString());
 
 
-                                        String image_uri = uri.toString();
+                                        image_uri = uri.toString();
                                         db.collection("recipes").document(title).update("image",image_uri );
 
                                         //db.collection("recipes").document(title).set("images", );

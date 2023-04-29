@@ -15,11 +15,28 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/shoppingCardDisplay"
             android:layout_width="0dp"
-            android:layout_height="350dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAddShoppingList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/colorAccent"
+            android:contentDescription="@string/add_shopping_list_button_description"
+            android:src="@drawable/ic_more"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
 
 <!--
         <androidx.cardview.widget.CardView
@@ -93,20 +110,3 @@
 
 -->
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnAddShoppingList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_margin="16dp"
-            android:backgroundTint="@color/colorAccent"
-            android:contentDescription="@string/add_shopping_list_button_description"
-            android:src="@drawable/ic_more"
-            app:layout_constraintBottom_toBottomOf="@+id/shoppingCardDisplay"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</FrameLayout>
