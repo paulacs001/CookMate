@@ -114,7 +114,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 new_recipe.put("title", title);
                 new_recipe.put("ingredients", ingredients);
                 new_recipe.put("instructions", instructions);
-                new_recipe.put("image", image_uri);
+                //new_recipe.put("image", image_uri);
                 new_recipe.put("timestamp" , currentDateTime);
                 HomeFragment.addRecipe(new_recipe);
 
@@ -176,14 +176,11 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     private void uploadImageToFirestore(Uri imageUri) {
         // Create a storage reference for the image file
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("profile_images/" + user.getUid() + ".jpg");
+        String title = etTitle.getText().toString().trim();
+        StorageReference storageRef = storage.getReference().child("recipe_images/" + title + ".jpg");
 
         // Upload the image file to Firebase Storage
-
         storageRef.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -196,9 +193,11 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         // Save the download URL to Firestore
                                         String title = etTitle.getText().toString().trim();
                                         Log.d(TAG, "MENSAJE PRUEBA" + title);
+                                        Log.d(TAG, "MENSAJE PRUEBA IMAGEN" + uri.toString());
 
-                                        image_uri = uri.toString() ;
-                                        db.collection("recipes").document(title).update("image", uri.toString());
+
+                                        String image_uri = uri.toString();
+                                        db.collection("recipes").document(title).update("image",image_uri );
 
                                         //db.collection("recipes").document(title).set("images", );
                                     }

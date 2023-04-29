@@ -11,22 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/RecipesTitle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/menu_recipes_text"
-            android:textAlignment="center"
-            android:textColor="#E91E63"
-            android:textSize="60sp"
-            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RecipesCardDisplay"
             android:layout_width="0dp"
             android:layout_height="350dp"
             android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/RecipesTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -131,8 +121,7 @@
             android:src="@drawable/ic_more"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CardView" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
