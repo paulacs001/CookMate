@@ -26,29 +26,40 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class ShoppingCartViewDetailActivity extends AppCompatActivity {
-    TextView title, items;
+    TextView title;
+    static RecyclerView shoppingItems;
+    static ArrayList<String> items;
     String alphaTitle, alphaItems;
 
-
+    static RecyclerViewAdapterDetailedView adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_cart_view_detail);
-
         title = (TextView) findViewById(R.id.CartTitle);
-        items = (TextView) findViewById(R.id.CartItems);
+        shoppingItems = findViewById(R.id.CartItems);
 
         alphaTitle = getIntent().getStringExtra("title");
         alphaItems = getIntent().getStringExtra("items");
-        //now set the get values in the respective widgets
+
         title.setText(alphaTitle);
-        items.setText(alphaItems);
-}
+        items = new ArrayList<String>(Arrays.asList(alphaItems.split(",")));
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        adapter = new RecyclerViewAdapterDetailedView(getApplicationContext(), items);
+        shoppingItems.setAdapter(adapter);
+        shoppingItems.setLayoutManager(layoutManager);
+
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
