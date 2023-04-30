@@ -43,7 +43,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private ImageView gallery_img_1;
 
-    private Uri profile_pic;
+    private String profile_pic;
 
     private static final int PICK_IMAGE = 1;
     private static final int GalleryPick = 2;
@@ -110,6 +110,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 updated_info.put("description", description);
 
 
+
                 db.collection("users").document(uid)
                         .set(updated_info)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -127,7 +128,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
                 // Display success message
-                Toast.makeText(getApplicationContext(), "Profile successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Profile successfully created", Toast.LENGTH_SHORT).show();
                 Intent mainIntent = new Intent(EditProfileActivity.this, SplashScreen.class);
                 startActivity(mainIntent);
 
@@ -189,6 +190,8 @@ public class EditProfileActivity extends AppCompatActivity {
                                         // Save the download URL to Firestore
                                         db.collection("users").document(user.getUid())
                                                 .update("profile_pic", uri.toString());
+
+                                        profile_pic = uri.toString();
 
                                     }
                                 });
