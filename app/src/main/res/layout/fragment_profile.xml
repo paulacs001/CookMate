@@ -19,13 +19,14 @@ android:orientation="vertical">
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:src="@drawable/ic_users"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="-20dp"/>
 
     <TextView
         android:id="@+id/display_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="Name"
         android:textAlignment="center"
         android:layout_gravity="center"
@@ -47,11 +48,24 @@ android:orientation="vertical">
         android:background="#F5F5DC"
         android:padding="25px"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:textColor="@color/black"
+        android:text="Show off some of your creations!"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:layout_marginTop="16dp">
+    </TextView>
+
     <LinearLayout
+        android:background="@color/colorGray"
         android:id="@+id/profile_gallery"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal"
         android:padding="8dp"
         android:gravity="center">
@@ -96,14 +110,15 @@ android:orientation="vertical">
         android:id="@+id/profile_acclarations"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Touch any of the items to update profile information"
+        android:text="Tap any of the items to update profile information"
         android:textAlignment="center"
         android:layout_gravity="center"
         android:textColor="@android:color/black"
         android:textSize="15sp"
         android:background="@color/colorGray"
         android:textStyle="italic"
-        android:padding="25px"/>
+        android:padding="25px"
+        android:layout_marginTop="15dp"/>
 
 
 
