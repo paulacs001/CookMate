@@ -4,15 +4,33 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnLogOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/colorAccent"
-        android:src="@drawable/ic_logout"
-        android:contentDescription="LogOut" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/btnChangeLang"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="top|start"
+            android:layout_margin="16dp"
+            android:src="@mipmap/ic_spanish"
+            android:contentDescription="Change Language" />
+
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnLogOut"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/colorAccent"
+            android:src="@drawable/ic_logout"
+            android:contentDescription="LogOut" />
+    </FrameLayout>
+
+
 
     <ImageView
         android:id="@+id/display_profile_pic"

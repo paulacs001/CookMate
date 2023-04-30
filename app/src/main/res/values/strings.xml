@@ -20,10 +20,22 @@
     <string name="next_item">What do you need for your next recipe?</string>
     <string name="add_item">Add item</string>
     <string name="to_buy">To buy</string>
-    <string name="background_image" translatable="false">Background Image</string>
+    <string name="background_image">Background image</string>
 
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
 
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
 
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="display_name_profile">Name</string>
     <string name="display_description_profile">User description</string>
     <string name="gallery_description_profile">Show off some of your creations!</string>
@@ -65,4 +77,8 @@
     <string name="edit_uname_hint_popup">Enter your new username</string>
     <string name="edit_desc_popup">Edit Description</string>
     <string name="edit_desc_hint_popup">Enter your new user description</string>
+    <string name="recipes_nav">Recipes</string>
+    <string name="search_nav">Search</string>
+    <string name="shop_list_nav">Shopping List</string>
+    <string name="profile_nav">Profile</string>
 </resources>

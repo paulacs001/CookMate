@@ -67,7 +67,7 @@ public class DashboardActivity extends AppCompatActivity {
             switch (menuItem.getItemId()) {
 
                 case R.id.nav_recipes:
-                    actionBar.setTitle("Recipes");
+                    actionBar.setTitle(R.string.recipes_nav);
                     HomeFragment fragment = new HomeFragment();
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.content, fragment, "");
@@ -75,7 +75,7 @@ public class DashboardActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.nav_search:
-                    actionBar.setTitle("Search");
+                    actionBar.setTitle(R.string.search_nav);
                     SearchFragment fragment1 = new SearchFragment();
                     FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction1.replace(R.id.content, fragment1);
@@ -83,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.nav_shopping_list:
-                    actionBar.setTitle("Shopping List");
+                    actionBar.setTitle(R.string.shop_list_nav);
                     ShoppingListFragment fragment2 = new ShoppingListFragment();
                     FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction2.replace(R.id.content, fragment2, "");
@@ -91,7 +91,7 @@ public class DashboardActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.nav_profile:
-                    actionBar.setTitle("Profile");
+                    actionBar.setTitle(R.string.profile_nav);
                     ProfileFragment listFragment = new ProfileFragment();
                     FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction3.replace(R.id.content, listFragment, "");

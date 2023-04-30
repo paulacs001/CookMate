@@ -54,4 +54,8 @@
     <string name="edit_uname_hint_popup">Añade tu nuevo nombe de usuario</string>
     <string name="edit_desc_popup">"Editar Descripción "</string>
     <string name="edit_desc_hint_popup">Añade tu nueva descripción</string>
+    <string name="recipes_nav">Recetas</string>
+    <string name="search_nav">Buscar</string>
+    <string name="shop_list_nav">Listas</string>
+    <string name="profile_nav">Perfil</string>
 </resources>

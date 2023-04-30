@@ -2,15 +2,14 @@ package com.example.cookmate;
 
 import static android.app.Activity.RESULT_OK;
 
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,11 +17,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,6 +43,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -47,6 +53,8 @@ public class ProfileFragment extends Fragment {
     private TextView display_name, display_description;
 
     ImageView profile_pic, gallery1, gallery2, gallery3;
+
+    ImageButton lang_image;
     private FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -57,6 +65,8 @@ public class ProfileFragment extends Fragment {
     private final int PICK_IMAGE_REQUEST_GALLERY2 = 73;
     private final int PICK_IMAGE_REQUEST_GALLERY3 = 74;
     private String updatedField;
+    private Locale locale;
+    private Configuration config = new Configuration();
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -67,9 +77,19 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-                FloatingActionButton fab = view.findViewById(R.id.btnLogOut);
+        FloatingActionButton fab_logout = view.findViewById(R.id.btnLogOut);
+        ImageButton fab_change_language = view.findViewById(R.id.btnChangeLang);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        lang_image = view.findViewById(R.id.btnChangeLang);
+        Locale currentLocale = getResources().getConfiguration().locale;
+        if (currentLocale.getLanguage().equals("es")) {
+            lang_image.setImageResource(R.mipmap.ic_english);
+        } else {
+            lang_image.setImageResource(R.mipmap.ic_spanish);
+        }
+
+
+        fab_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent mainIntent = new Intent(getActivity(), LoginActivity.class);
@@ -77,6 +97,39 @@ public class ProfileFragment extends Fragment {
                 startActivity(mainIntent);
             }
         });
+
+        fab_change_language.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Locale currentLocale = getResources().getConfiguration().locale;
+                Locale newLocale;
+                if (currentLocale.getLanguage().equals("es")) {
+                    newLocale = new Locale("en");
+                } else {
+                    newLocale = new Locale("es");
+                }
+
+                // Update the device locale
+                Locale.setDefault(newLocale);
+                Configuration configuration = new Configuration();
+                configuration.setLocale(newLocale);
+                getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+
+                // Restart the activity
+                Intent refresh = new Intent(getActivity(), DashboardActivity.class);
+                startActivity(refresh);
+
+/*
+                getResources().updateConfiguration(config, null);
+                Intent refresh = new Intent(DashboardActivity.this, ProfileFragment.class);
+                startActivity(refresh);
+                finish();
+
+                */
+            }
+        });
+
+
 
         display_name = view.findViewById(R.id.display_name);
         display_description = view.findViewById(R.id.display_description);
@@ -396,6 +449,19 @@ public class ProfileFragment extends Fragment {
                 });
 
 
+    }
+
+    public void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, displayMetrics);
+
+        Intent intent = new Intent(getActivity(), DashboardActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 }
