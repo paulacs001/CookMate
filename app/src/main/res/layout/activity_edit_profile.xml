@@ -9,7 +9,7 @@
         android:id="@+id/edit_pic_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choose Your Profile Pic"
+        android:text="@string/profile_pic_title_edit_profile"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="16dp"/>
@@ -25,7 +25,7 @@
         android:id="@+id/edit_name_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="How should we call you?"
+        android:text="@string/name_title_edit_profile"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="16dp"/>
@@ -34,7 +34,7 @@
         android:id="@+id/edit_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Insert your name"
+        android:hint="@string/hint_name_edit_profile"
         android:layout_marginTop="8dp"
         android:inputType="text" />
 
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Describe yourself!"
+        android:text="@string/desc_title_edit_profile"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
         android:id="@+id/edit_description"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:hint="What would you like others to know about you?"
+        android:hint="@string/desc_hint_edit_profile"
         android:inputType="textMultiLine"
         android:scrollbars="vertical" />
 
@@ -60,6 +60,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Update Profile" />
+        android:text="@string/update_profile_button_edit_profile" />
 
 </LinearLayout>

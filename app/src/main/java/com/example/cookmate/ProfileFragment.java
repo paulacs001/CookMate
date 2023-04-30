@@ -202,19 +202,16 @@ public class ProfileFragment extends Fragment {
         Button updateUsernameButton = popupView.findViewById(R.id.update_desc_button);
 
         if (mode == 0){
-            popupTitle.setText("Edit Username");
-            popupEditText.setHint("Enter your new username");
+            popupTitle.setText(R.string.edit_username_popup);
+            popupEditText.setHint(R.string.edit_uname_hint_popup);
         }
 
         else if (mode == 1){
-            popupTitle.setText("Edit Description");
-            popupEditText.setHint("Enter your new user description");
+            popupTitle.setText(R.string.edit_desc_popup);
+            popupEditText.setHint(R.string.edit_desc_hint_popup);
         }
         // Create the popup window
         PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-
-        // Set the title of the popup window
-        popupTitle.setText("Edit Username");
 
         // Set a click listener on the Update button
         updateUsernameButton.setOnClickListener(new View.OnClickListener() {
