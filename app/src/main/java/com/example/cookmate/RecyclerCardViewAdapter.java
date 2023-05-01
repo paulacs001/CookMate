@@ -43,6 +43,12 @@ public class RecyclerCardViewAdapter extends RecyclerView.Adapter<RecyclerCardVi
         Map<String, Object> document = documentList.get(position);
         viewHolder.cartTitle.setText(document.get("title").toString());
         viewHolder.cartItems.setText(document.get("items").toString());
+        viewHolder.remove.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                ShoppingListFragment.removeCart(document);
+            }
+        });
 
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -68,6 +74,7 @@ public class RecyclerCardViewAdapter extends RecyclerView.Adapter<RecyclerCardVi
         TextView cartItemsTitle;
         TextView cartItems;
         ImageView cartImage;
+        ImageView remove;
         LinearLayout linearLayout;
 
         public MyViewHolder(View itemView) {
@@ -76,6 +83,7 @@ public class RecyclerCardViewAdapter extends RecyclerView.Adapter<RecyclerCardVi
             cartItemsTitle = (TextView) itemView.findViewById(R.id.CartItemsTitle);
             cartItems = (TextView) itemView.findViewById(R.id.CartItems);
             cartImage = (ImageView) itemView.findViewById(R.id.CartImage);
+            remove = (ImageView) itemView.findViewById(R.id.remove);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.CardView);
         }
     }

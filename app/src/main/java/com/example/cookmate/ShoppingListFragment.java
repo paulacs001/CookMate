@@ -1,5 +1,7 @@
 package com.example.cookmate;
 
+import static kotlin.jvm.internal.Reflection.function;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -23,6 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -31,11 +34,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Map;
 
+import kotlin.jvm.internal.FunctionReference;
+
 public class ShoppingListFragment extends Fragment {
 
     private FloatingActionButton btnAddShoppingList;
     FirebaseUser firebaseUser;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private static final String TAG = "MyActivity";
     private TextView CartTitle, CartItems;
@@ -44,7 +49,7 @@ public class ShoppingListFragment extends Fragment {
     static ArrayList<Map<String, Object>> items;
     static RecyclerCardViewAdapter adapter;
 
-    private FirebaseAuth mAuth;
+    private static FirebaseAuth mAuth;
 
     public ShoppingListFragment() {
         // Required empty public constructor
@@ -106,6 +111,18 @@ public class ShoppingListFragment extends Fragment {
     }
     public static void addCart( Map<String, Object> cart){
         items.add(cart);
+        carts.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+    public static void removeCart(Map<String, Object>  cart){
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+
+        items.remove(cart);
+        db.collection("users").document(uid)
+                .collection("Shopping Lists").document(cart.get("title").toString())
+                .delete();
         carts.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
