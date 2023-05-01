@@ -82,6 +82,10 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String ingredients = etIngredients.getText().toString().trim();
                 String instructions = etInstructions.getText().toString().trim();
 
+                // Get current user ID
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = mAuth.getCurrentUser();
+                String userId = user.getUid();
 
                 // Validate user input
                 if (title.isEmpty()) {
@@ -113,6 +117,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 new_recipe.put("instructions", instructions);
                 new_recipe.put("image", image_uri);
                 new_recipe.put("timestamp" , currentDateTime);
+                new_recipe.put("userId", userId);
                 HomeFragment.addRecipe(new_recipe);
 
                 Log.w(TAG, "New Recipe =>" + new_recipe);

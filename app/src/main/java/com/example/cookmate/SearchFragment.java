@@ -20,11 +20,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class SearchFragment extends Fragment {
 
@@ -72,20 +74,27 @@ public class SearchFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        Log.d("SEARCH", "Searching for: " + searchText);
+        // Create a regular expression pattern that matches the search text case-insensitively
+        Pattern pattern = Pattern.compile(searchText, Pattern.CASE_INSENSITIVE);
+
+        Log.d("SEARCH", "Searching for: " + pattern);
         try {
+            items.clear();
             db.collection("recipes")
-                    .whereEqualTo("title", searchText)
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            items.clear();
                             if (task.isSuccessful()) {
-                                Log.d("ENTERED", "Succesful");
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    items.add(document.getData());
-                                    Log.d(TAG, "hf: " + document.getId() + " => " + document.getData());
+                                    String ingredients = document.getString("ingredients");
+                                    String title = document.getString("title");
+                                    if (ingredients != null && Pattern.compile(Pattern.quote(searchText), Pattern.CASE_INSENSITIVE).matcher(ingredients).find()) {
+                                        items.add(document.getData());
+                                    } else if (title != null && Pattern.compile(Pattern.quote(searchText), Pattern.CASE_INSENSITIVE).matcher(title).find()) {
+                                        items.add(document.getData());
+                                    }
                                 }
                                 adapter = new RecyclerCardViewSearchAdapter(getContext(), items);
                                 adapter.notifyDataSetChanged();
@@ -100,6 +109,7 @@ public class SearchFragment extends Fragment {
         } catch (Exception e) {
             Toast.makeText(getContext(), "An error occurred while searching.", Toast.LENGTH_SHORT).show();
         }
+
     }
 
 }

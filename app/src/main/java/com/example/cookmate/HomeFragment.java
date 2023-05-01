@@ -42,6 +42,7 @@ public class HomeFragment extends Fragment {
     private FloatingActionButton btnAddRecipe;
     FirebaseUser firebaseUser;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
     private static final String TAG = "MyActivity";
 
     private static RecyclerView recipes;
@@ -59,6 +60,13 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         FloatingActionButton fab = view.findViewById(R.id.btnAddRecipe);
+        Button discoverButton = view.findViewById(R.id.discover_button);
+        Button forYouButton = view.findViewById(R.id.for_you_button);
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +76,7 @@ public class HomeFragment extends Fragment {
 
         });
 
+
         Log.w(TAG, "launching home fragment.");
 
         items = new ArrayList<>();
@@ -76,6 +85,63 @@ public class HomeFragment extends Fragment {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        forYouButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                items.clear();
+                db.collection("recipes")
+                        .whereEqualTo("userId", uid)
+                        .orderBy("timestamp", Query.Direction.DESCENDING)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        items.add(document.getData());
+                                        Log.d(TAG, "hf: " + document.getId() + " => " + document.getData());
+                                    }
+                                    adapter = new RecyclerCardViewRecipeAdapter(getContext(), items);
+                                    adapter.notifyDataSetChanged();
+                                    recipes.setAdapter(adapter);
+                                    recipes.setLayoutManager(layoutManager);
+                                } else {
+                                    Log.w(TAG, "Error getting documents.", task.getException());
+                                }
+                            }
+                        });
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        discoverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                items.clear();
+                db.collection("recipes")
+                        .orderBy("timestamp", Query.Direction.DESCENDING)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        items.add(document.getData());
+                                        Log.d(TAG, "hf: " + document.getId() + " => " + document.getData());
+                                    }
+                                    adapter = new RecyclerCardViewRecipeAdapter(getContext(), items);
+                                    adapter.notifyDataSetChanged();
+                                    recipes.setAdapter(adapter);
+                                    recipes.setLayoutManager(layoutManager);
+                                } else {
+                                    Log.w(TAG, "Error getting documents.", task.getException());
+                                }
+                            }
+                        });
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         db.collection("recipes")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -89,6 +155,7 @@ public class HomeFragment extends Fragment {
                                 Log.d(TAG, "hf: " + document.getId() + " => " + document.getData());
                             }
                             adapter = new RecyclerCardViewRecipeAdapter(getContext(), items);
+                            adapter.notifyDataSetChanged();
                             recipes.setAdapter(adapter);
                             recipes.setLayoutManager(layoutManager);
                         } else {
@@ -104,6 +171,7 @@ public class HomeFragment extends Fragment {
         recipes.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
+
 
 
 }
