@@ -81,4 +81,6 @@
     <string name="search_nav">Search</string>
     <string name="shop_list_nav">Shopping List</string>
     <string name="profile_nav">Profile</string>
+    <string name="ingredients_card_recipes">Ingredients</string>
+    <string name="instructions_card_recipe">Instructions</string>
 </resources>

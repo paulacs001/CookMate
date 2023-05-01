@@ -120,7 +120,8 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 items.clear();
                 db.collection("recipes")
-                        .orderBy("timestamp", Query.Direction.DESCENDING)
+                        .whereNotEqualTo("userId", uid)
+                        .orderBy("userId").orderBy("timestamp", Query.Direction.DESCENDING)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override

@@ -49,6 +49,7 @@ public class ShoppingCartViewDetailActivity extends AppCompatActivity {
         alphaItems = getIntent().getStringExtra("items");
 
         title.setText(alphaTitle);
+        alphaItems = alphaItems.replace("[", "").replace("]", "");
         items = new ArrayList<String>(Arrays.asList(alphaItems.split(",")));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

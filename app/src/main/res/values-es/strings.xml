@@ -58,4 +58,6 @@
     <string name="search_nav">Buscar</string>
     <string name="shop_list_nav">Listas</string>
     <string name="profile_nav">Perfil</string>
+    <string name="ingredients_card_recipes">Ingredientes</string>
+    <string name="instructions_card_recipe">Instrucciones</string>
 </resources>
