@@ -37,6 +37,15 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Map;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.PowerManager;
+import androidx.core.app.NotificationCompat;
 public class HomeFragment extends Fragment {
 
     private FloatingActionButton btnAddRecipe;
