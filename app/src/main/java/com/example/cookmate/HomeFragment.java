@@ -2,6 +2,8 @@ package com.example.cookmate;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -59,6 +61,7 @@ public class HomeFragment extends Fragment {
 
     static RecyclerCardViewRecipeAdapter adapter;
     private ImageView RecipeImage;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -96,8 +99,11 @@ public class HomeFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         forYouButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
+                discoverButton.setBackgroundColor(Color.parseColor("#F5F1F1"));
+                forYouButton.setBackgroundColor(Color.parseColor("#0A527E"));
                 items.clear();
                 db.collection("recipes")
                         .whereEqualTo("userId", uid)
@@ -125,8 +131,11 @@ public class HomeFragment extends Fragment {
         });
 
         discoverButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
+                discoverButton.setBackgroundColor(Color.parseColor("#0A527E"));
+                forYouButton.setBackgroundColor(Color.parseColor("#F5F1F1"));
                 items.clear();
                 db.collection("recipes")
                         .whereNotEqualTo("userId", uid)

@@ -24,14 +24,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Discover" />
+                android:text="Discover"
+                android:background="@color/colorAccent"/>
+
 
             <Button
                 android:id="@+id/for_you_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="For You" />
+                android:text="For You"
+                android:background="@color/colorGray"/>
 
         </LinearLayout>
 
