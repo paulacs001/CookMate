@@ -88,9 +88,9 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String userId = user.getUid();
 
                 // Validate user input
-                if (title.isEmpty()) {
-                    etTitle.setError(getString(R.string.title_warning_new_recipe));
-                    etTitle.requestFocus();
+                if (instructions.isEmpty()) {
+                    etInstructions.setError(getString(R.string.instructions__warning_new_recipe));
+                    etInstructions.requestFocus();
                 }
 
                 if (ingredients.isEmpty()) {
@@ -98,64 +98,72 @@ public class AddRecipeActivity extends AppCompatActivity {
                     etIngredients.requestFocus();
                 }
 
-                if (instructions.isEmpty()) {
-                    etInstructions.setError(getString(R.string.instructions__warning_new_recipe));
-                    etInstructions.requestFocus();
+                if (title.isEmpty()) {
+                    etTitle.setError(getString(R.string.title_warning_new_recipe));
+                    etTitle.requestFocus();
                 }
 
-                // Add recipe to database or perform any other relevant action here
+                if (! title.isEmpty() && ! ingredients.isEmpty() && !instructions.isEmpty()) {
+                    // Add recipe to database or perform any other relevant action here
 
-                //We will want to save timestamp too
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String currentDateTime = dateFormat.format(new Date()); // Find todays date
-
-
-                // Create a new user with a first and last name
-                Map<String, Object> new_recipe = new HashMap<>();
-                new_recipe.put("title", title);
-                new_recipe.put("ingredients", ingredients);
-                new_recipe.put("instructions", instructions);
-                new_recipe.put("image", image_uri);
-                new_recipe.put("timestamp" , currentDateTime);
-                new_recipe.put("userId", userId);
-                HomeFragment.addRecipe(new_recipe);
-
-                Log.w(TAG, "New Recipe =>" + new_recipe);
-                db.collection("recipes").document(title)
-                        .set(new_recipe)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "DocumentSnapshot successfully written!");
-                                Toast.makeText(getApplicationContext(), "Recipe added successfully", Toast.LENGTH_SHORT).show();
-
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error writing document", e);
-                                Toast.makeText(getApplicationContext(), "Recipe NOT added successfully", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    //We will want to save timestamp too
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String currentDateTime = dateFormat.format(new Date()); // Find todays date
 
 
-                // Display success message
-                finish(); // This will close the current activity and return to the previous one
+                    // Create a new user with a first and last name
+                    Map<String, Object> new_recipe = new HashMap<>();
+                    new_recipe.put("title", title);
+                    new_recipe.put("ingredients", ingredients);
+                    new_recipe.put("instructions", instructions);
+                    new_recipe.put("image", image_uri);
+                    new_recipe.put("timestamp" , currentDateTime);
+                    new_recipe.put("userId", userId);
+                    HomeFragment.addRecipe(new_recipe);
 
-                // Clear input fields
-                etTitle.setText("");
-                etIngredients.setText("");
-                etInstructions.setText("");
+                    Log.w(TAG, "New Recipe =>" + new_recipe);
+                    db.collection("recipes").document(title)
+                            .set(new_recipe)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                                    Toast.makeText(getApplicationContext(), "Recipe added successfully", Toast.LENGTH_SHORT).show();
+
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error writing document", e);
+                                    Toast.makeText(getApplicationContext(), "Recipe NOT added successfully", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+
+                    finish(); // This will close the current activity and return to the previous one
+
+                    // Clear input fields
+                    etTitle.setText("");
+                    etIngredients.setText("");
+                    etInstructions.setText("");
+                }
             }
         });
+
         // Add click listener to the "Add Image" button
         btnAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String title = etTitle.getText().toString().trim();
+                if (title.isEmpty()) {
+                    etTitle.setError(getString(R.string.title_warning_new_recipe));
+                    etTitle.requestFocus();
+                } else {
                     Intent intent = new Intent(Intent.ACTION_PICK);
                     intent.setType("image/*");
                     startActivityForResult(intent, PICK_IMAGE_REQUEST);
+                }
             }
         });
 
@@ -199,7 +207,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         image_uri = uri.toString();
                                         db.collection("recipes").document(title).update("image",image_uri );
 
-                                        //db.collection("recipes").document(title).set("images", );
                                     }
                                 });
                     }
