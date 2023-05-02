@@ -158,9 +158,10 @@ public class HomeFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
-
+        items.clear();
         db.collection("recipes")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .whereNotEqualTo("userId", uid)
+                .orderBy("userId").orderBy("timestamp", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

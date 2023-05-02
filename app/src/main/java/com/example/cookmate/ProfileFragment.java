@@ -119,13 +119,6 @@ public class ProfileFragment extends Fragment {
                 Intent refresh = new Intent(getActivity(), DashboardActivity.class);
                 startActivity(refresh);
 
-/*
-                getResources().updateConfiguration(config, null);
-                Intent refresh = new Intent(DashboardActivity.this, ProfileFragment.class);
-                startActivity(refresh);
-                finish();
-
-                */
             }
         });
 
