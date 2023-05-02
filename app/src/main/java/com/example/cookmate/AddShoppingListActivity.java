@@ -65,23 +65,6 @@ public class AddShoppingListActivity extends AppCompatActivity {
         String uid = user.getUid();
 
 
-        ///shoppingItems.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-        ///    @Override
-        ///    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
-        ///        String name = items.get(i);
-        ///        makeToast(name);
-        ///    }
-        ///});
-
-        ///shoppingItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
-        ///    @Override
-        ///    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l){
-        ///        makeToast("Removed " + items.get(i));
-        ///        removeItem(i);
-        ///        return false;
-        ///    }
-        ///});
-
         Handler handler = new Handler(Looper.getMainLooper());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -97,11 +80,11 @@ public class AddShoppingListActivity extends AppCompatActivity {
                 closeKeyboard();
                 String text = etItems.getText().toString();
                 if (text == null || text.length() == 0) {
-                    makeToast("Enter an item");
+                    makeToast(getString(R.string.no_item_warning_new_sc));
                 } else {
                     addItem(text);
                     etItems.setText("");
-                    makeToast("Added " + text);
+                    makeToast(getString(R.string.added_warning_new_sc) + text);
                 }
             }
         });
@@ -114,12 +97,12 @@ public class AddShoppingListActivity extends AppCompatActivity {
                 String title = etTitle.getText().toString().trim();
 
                 if (title.isEmpty()) {
-                    etTitle.setError("Please enter a title");
+                    etTitle.setError(getString(R.string.title_warning_new_sc));
                     etTitle.requestFocus();
                 }
 
                 if (items.isEmpty()) {
-                    etItems.setError("Please enter items to buy");
+                    etItems.setError(getString(R.string.items_warning_new_sc));
                     etItems.requestFocus();
                 }
 

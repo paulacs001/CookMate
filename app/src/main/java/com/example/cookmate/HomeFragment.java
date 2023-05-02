@@ -89,7 +89,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-        Log.w(TAG, "launching home fragment.");
 
         items = new ArrayList<>();
 
@@ -99,7 +98,7 @@ public class HomeFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         forYouButton.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceAsColor")
+
             @Override
             public void onClick(View v) {
                 discoverButton.setBackgroundColor(Color.parseColor("#F5F1F1"));
@@ -115,7 +114,6 @@ public class HomeFragment extends Fragment {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         items.add(document.getData());
-                                        Log.d(TAG, "hf: " + document.getId() + " => " + document.getData());
                                     }
                                     adapter = new RecyclerCardViewRecipeAdapter(getContext(), items);
                                     adapter.notifyDataSetChanged();
@@ -131,7 +129,6 @@ public class HomeFragment extends Fragment {
         });
 
         discoverButton.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
                 discoverButton.setBackgroundColor(Color.parseColor("#0A527E"));
@@ -171,7 +168,6 @@ public class HomeFragment extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 items.add(document.getData());
-                                Log.d(TAG, "hf: " + document.getId() + " => " + document.getData());
                             }
                             adapter = new RecyclerCardViewRecipeAdapter(getContext(), items);
                             adapter.notifyDataSetChanged();

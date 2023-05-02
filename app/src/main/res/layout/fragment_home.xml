@@ -24,7 +24,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Discover"
+                android:text="@string/discover_main_button"
                 android:background="@color/colorAccent"/>
 
 
@@ -33,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="For You"
+                android:text="@string/your_recipes_main_button"
                 android:background="@color/colorGray"/>
 
         </LinearLayout>

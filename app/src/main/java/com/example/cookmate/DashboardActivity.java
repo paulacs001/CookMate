@@ -86,7 +86,6 @@ public class DashboardActivity extends AppCompatActivity {
                             int randomIndex = (int) (Math.random() * size);
                             DocumentSnapshot randomDoc = docs.get(randomIndex);
                             NotiTitle = randomDoc.get("title").toString();
-                            Log.d(TAG, "SUGGESTION: " + NotiTitle);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -104,7 +103,7 @@ public class DashboardActivity extends AppCompatActivity {
                 NotificationCompat.Builder builder =
                         new NotificationCompat.Builder(context, CHANNEL_ID);
                 builder.setContentTitle("CookMate");
-                builder.setContentText("Why not try out making " + NotiTitle + "?");
+                builder.setContentText(getString(R.string.noti_banner) + NotiTitle + "?");
                 builder.setSmallIcon(R.mipmap.ic_logo);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

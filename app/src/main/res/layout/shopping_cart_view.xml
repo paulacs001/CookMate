@@ -45,7 +45,7 @@
             android:id="@+id/CartItemsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Items"
+            android:text="@string/items_sc_detail"
             android:layout_gravity="bottom"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"

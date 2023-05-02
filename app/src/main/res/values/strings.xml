@@ -83,4 +83,19 @@
     <string name="profile_nav">Profile</string>
     <string name="ingredients_card_recipes">Ingredients</string>
     <string name="instructions_card_recipe">Instructions</string>
+    <string name="discover_main_button">Discover</string>
+    <string name="your_recipes_main_button">Your Recipes</string>
+    <string name="items_sc_detail">Items</string>
+    <string name="to_buy_sc_card">To buy</string>
+    <string name="title_warning_new_recipe">Please enter a title</string>
+    <string name="ingredients_warning_new_recipe">Please enter ingredients</string>
+    <string name="instructions__warning_new_recipe">Please enter instructions</string>
+    <string name="no_item_warning_new_sc">Enter an item</string>
+    <string name="added_warning_new_sc">"Added "</string>
+    <string name="title_warning_new_sc">Please enter a title</string>
+    <string name="items_warning_new_sc">Please enter items to buy</string>
+    <string name="noti_banner">"Why not try out making "</string>
+    <string name="edit_profile_warning_name">Please enter your name</string>
+    <string name="edit_profile_warning_desc">Please enter a description</string>
+    <string name="search_hint_fragment">Search by Title or Ingredients</string>
 </resources>

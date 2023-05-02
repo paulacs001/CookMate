@@ -89,17 +89,17 @@ public class AddRecipeActivity extends AppCompatActivity {
 
                 // Validate user input
                 if (title.isEmpty()) {
-                    etTitle.setError("Please enter a title");
+                    etTitle.setError(getString(R.string.title_warning_new_recipe));
                     etTitle.requestFocus();
                 }
 
                 if (ingredients.isEmpty()) {
-                    etIngredients.setError("Please enter ingredients");
+                    etIngredients.setError(getString(R.string.ingredients_warning_new_recipe));
                     etIngredients.requestFocus();
                 }
 
                 if (instructions.isEmpty()) {
-                    etInstructions.setError("Please enter instructions");
+                    etInstructions.setError(getString(R.string.instructions__warning_new_recipe));
                     etInstructions.requestFocus();
                 }
 
@@ -194,8 +194,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                                     public void onSuccess(Uri uri) {
                                         // Save the download URL to Firestore
                                         String title = etTitle.getText().toString().trim();
-                                        Log.d(TAG, "MENSAJE PRUEBA " + title);
-                                        Log.d(TAG, "MENSAJE PRUEBA IMAGEN " + uri.toString());
 
 
                                         image_uri = uri.toString();

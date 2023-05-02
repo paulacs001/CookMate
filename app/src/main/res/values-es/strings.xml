@@ -60,4 +60,19 @@
     <string name="profile_nav">Perfil</string>
     <string name="ingredients_card_recipes">Ingredientes</string>
     <string name="instructions_card_recipe">Instrucciones</string>
+    <string name="discover_main_button">Explora</string>
+    <string name="your_recipes_main_button">Tus Recetas</string>
+    <string name="items_sc_detail">Articulos</string>
+    <string name="to_buy_sc_card">A Comprar</string>
+    <string name="title_warning_new_recipe">Añade un título</string>
+    <string name="ingredients_warning_new_recipe">Añade ingredientes</string>
+    <string name="instructions__warning_new_recipe">Añade instrucciones</string>
+    <string name="no_item_warning_new_sc">Añade un articulo</string>
+    <string name="added_warning_new_sc">"Añadido "</string>
+    <string name="title_warning_new_sc">Añade un título</string>
+    <string name="items_warning_new_sc">Añade ingredientes a comprar</string>
+    <string name="noti_banner">"Y si probamos a hacer... "</string>
+    <string name="edit_profile_warning_name">Introduce tu nombre</string>
+    <string name="edit_profile_warning_desc">Introduce una descripción</string>
+    <string name="search_hint_fragment">Busca por título o ingredientes!</string>
 </resources>
