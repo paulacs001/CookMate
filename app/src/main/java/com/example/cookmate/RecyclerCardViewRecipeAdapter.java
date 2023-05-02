@@ -43,7 +43,7 @@ public class RecyclerCardViewRecipeAdapter extends RecyclerView.Adapter<Recycler
 
         viewHolder.RecipeTitle.setText(document.get("title").toString());
         viewHolder.RecipeIngredients.setText(document.get("ingredients").toString());
-        viewHolder.RecipeInstructions.setText(document.get("instructions").toString());
+        //viewHolder.RecipeInstructions.setText(document.get("instructions").toString());
         if (document.get("image") != null){
             String recipe_image_uri = document.get("image").toString();
             Picasso.get().load(recipe_image_uri).into(viewHolder.RecipeImage);
@@ -82,6 +82,7 @@ public class RecyclerCardViewRecipeAdapter extends RecyclerView.Adapter<Recycler
             super(itemView);
             RecipeTitle = (TextView) itemView.findViewById(R.id.RecipeTitle);
             RecipeIngredients = (TextView) itemView.findViewById(R.id.RecipeIngredients);
+
             RecipeInstructions = (TextView) itemView.findViewById(R.id.RecipeInstructions);
             RecipeImage = (ImageView) itemView.findViewById(R.id.RecipeImage);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.CardViewRecipe);

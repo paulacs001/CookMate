@@ -43,7 +43,7 @@ public class RecyclerCardViewSearchAdapter extends RecyclerView.Adapter<Recycler
 
         viewHolder.RecipeTitle.setText(document.get("title").toString());
         viewHolder.RecipeIngredients.setText(document.get("ingredients").toString());
-        viewHolder.RecipeInstructions.setText(document.get("instructions").toString());
+        //viewHolder.RecipeInstructions.setText(document.get("instructions").toString());
         if (document.get("image") != null){
             String recipe_image_uri = document.get("image").toString();
             Picasso.get().load(recipe_image_uri).into(viewHolder.RecipeImage);
